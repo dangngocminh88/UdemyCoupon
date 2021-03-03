@@ -40,6 +40,7 @@ namespace GetUdemyCourse.Website
             }
 
             Course course = await GetCourseInfo(courseId, couponCode);
+            course.UdemyLink = udemyLink;
 
             return course;
         }
@@ -93,6 +94,7 @@ namespace GetUdemyCourse.Website
                         course.OriginalPrice = purchaseData.pricing_result.list_price.price_string;
                         course.DiscountedPrice = purchaseData.pricing_result.price.price_string;
                         course.Amount = purchaseData.pricing_result.price.amount;
+                        course.Discount_percent = purchaseData.pricing_result.discount_percent;
 
                         if (course.OriginalPrice.Equals(course.DiscountedPrice))
                         {

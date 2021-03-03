@@ -1,4 +1,4 @@
-<div class="container-fluid bg-primary text-center text-white">
+<div class="container-fluid bg-primary text-center text-white p-2">
   <div class="row">
     <div class="col">
       <h1>Udemy Coupon</h1>
@@ -20,6 +20,36 @@
           <a class="nav-link" aria-current="page" href="#">Discount Coupon</a>
         </li>
       </ul>
+    </div>
+    <div class="col-2"></div>
+  </div>
+</div>
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-2"></div>
+    <div class="col-8">
+      <div class="row mt-2 pt-2 border-top" *ngFor="let course of courses">
+        <div class="col-sm-4">
+          <img src="{{course.image_200_H}}" alt="{{course.title}}" width="100%">
+        </div>
+        <div class="col-sm-8">
+          <h5><a href="#" class="text-success">{{course.title}}</a></h5>
+          <p></p>
+          <label>
+            <b>Rating: </b>
+            <i class="fa {{classRating(course, 1)}} text-warning"></i>
+            <i class="fa {{classRating(course, 2)}} text-warning"></i>
+            <i class="fa {{classRating(course, 3)}} text-warning"></i>
+            <i class="fa {{classRating(course, 4)}} text-warning"></i>
+            <i class="fa {{classRating(course, 5)}} text-warning"></i>
+            <b> {{course.avg_rating_recent | number:'1.1-1'}}</b>
+          </label><br>
+          <label><b>About Course:</b>&nbsp;{{course.headline}}</label>
+          <label><b>Category:</b>&nbsp;{{course.category}}</label><br>
+          <label><b>Previous Price:</b>&nbsp;<s>{{course.originalPrice}}</s></label><br>
+          <label><b>Current Price:</b>&nbsp;{{course.discountedPrice}}&nbsp;&nbsp;</label><span class="badge bg-danger">100% Off</span><br>
+        </div>
+      </div>
     </div>
     <div class="col-2"></div>
   </div>
