@@ -8,6 +8,7 @@ namespace Entities.Models
     public class Course
     {
         public long CourseId { get; set; }
+        public string UdemyLink { get; set; }
         public string Title { get; set; }
         public string Headline { get; set; }
         public string Description { get; set; }
@@ -21,6 +22,7 @@ namespace Entities.Models
         public string OriginalPrice { get; set; }
         public string DiscountedPrice { get; set; }
         public decimal Amount { get; set; }
+        public decimal Discount_percent { get; set; }
         public DateTime CreatedDate { get; set; }
     }
 }

@@ -27,5 +27,18 @@ namespace UdemyCoupon.Controllers
                 return BadRequest(ex.Message);
             }
         }
+        [HttpGet]
+        [Route("CourseList/{page}")]
+        public IActionResult CourseList(int page)
+        {
+            try
+            {
+                return Ok(courseRepository.CourseList(page, pageSize));
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
     }
 }
