@@ -20,6 +20,7 @@ namespace GetUdemyCourse.Models
         public DateTime? EndTime { get; set; }
         public string OriginalPrice { get; set; }
         public string DiscountedPrice { get; set; }
+        public decimal Originalmount { get; set; }
         public decimal Amount { get; set; }
         public decimal Discount_percent { get; set; }
     }
@@ -66,6 +67,7 @@ namespace GetUdemyCourse.Models
     public class ListPrice
     {
         public string price_string { get; set; }
+        public decimal amount { get; set; }
     }
     public class Price
     {

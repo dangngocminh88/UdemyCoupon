@@ -16,10 +16,18 @@ namespace GetUdemyCourse.Website
             List<Course> courseList = new List<Course>();
             foreach (string udemyLink in udemyLinkList)
             {
-                Course course = await CreateCourse(udemyLink);
-                if (course != null)
+                Console.WriteLine(udemyLink);
+                try
                 {
-                    courseList.Add(course);
+                    Course course = await CreateCourse(udemyLink);
+                    if (course != null)
+                    {
+                        courseList.Add(course);
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex.ToString());
                 }
             }
             return courseList;
@@ -93,12 +101,18 @@ namespace GetUdemyCourse.Website
                         catch (Exception) { }
                         course.OriginalPrice = purchaseData.pricing_result.list_price.price_string;
                         course.DiscountedPrice = purchaseData.pricing_result.price.price_string;
+                        course.Originalmount = purchaseData.pricing_result.list_price.amount;
                         course.Amount = purchaseData.pricing_result.price.amount;
                         course.Discount_percent = purchaseData.pricing_result.discount_percent;
 
                         if (course.OriginalPrice.Equals(course.DiscountedPrice))
                         {
                             return null;
+                        }
+
+                        if (course.Discount_percent == 0)
+                        {
+                            course.Discount_percent = (course.Originalmount - course.Amount) / course.Originalmount * 100;
                         }
                     }
                     else
