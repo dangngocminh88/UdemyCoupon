@@ -8,7 +8,7 @@ import { catchError } from 'rxjs/operators';
 })
 export class DataService {
 
-    private REST_API_SERVER = "https://localhost:44351/api/course/1";
+    private REST_API_SERVER = "https://localhost:44351/";
 
     constructor(private httpClient: HttpClient) { }
 
@@ -25,7 +25,7 @@ export class DataService {
         return throwError(errorMessage);
       }
 
-    public sendGetRequest() {
-      return this.httpClient.get(this.REST_API_SERVER).pipe(catchError(this.handleError));
+    public sendGetRequest(api: string) {
+      return this.httpClient.get(`${this.REST_API_SERVER}${api}`).pipe(catchError(this.handleError));
     }
 }

@@ -5,7 +5,7 @@ using UdemyCoupon.Repositories;
 namespace UdemyCoupon.Controllers
 {
     [ApiController]
-    [Route("api/[controller]")]
+    [Route("api")]
     public class CourseController : ControllerBase
     {
         private readonly int pageSize = 15;
@@ -28,7 +28,7 @@ namespace UdemyCoupon.Controllers
             }
         }
         [HttpGet]
-        [Route("CourseList/{page}")]
+        [Route("courseList/{page}")]
         public IActionResult CourseList(int page)
         {
             try

@@ -1,0 +1,15 @@
+<div class="row mt-2 border-top">
+    <div class="col-12 mt-2 text-right">
+        <label>Currently <b><span class="text-danger">{{courseList.totalCount}}</span></b> active Udemy coupons</label>
+    </div>
+</div>
+<div class="row mt-2 pt-2 pb-2 border shadow" *ngFor="let course of courseList.courses">
+    <div class="col-sm-4">
+        <img src="{{course.image_200_H}}" alt="{{course.title}}" width="100%">
+    </div>
+    <div class="col-sm-8">
+        <h5><a href="#" class="text-success">{{course.title}}</a></h5>
+        <p></p>
+        <label><b>About Course:</b>&nbsp;{{course.headline}}</label><span class="badge bg-danger">100% Off</span><br>
+    </div>
+</div>

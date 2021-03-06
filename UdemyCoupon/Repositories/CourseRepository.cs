@@ -31,14 +31,16 @@ namespace UdemyCoupon.Repositories
             CourseList response = new CourseList
             {
                 TotalCount = query.Count(),
-                Courses = query.OrderByDescending(c => c.CreatedDate).Select(c => new Course
+                Courses = query.OrderByDescending(c => c.CreatedDate).Skip(skipRow).Take(pageSize)
+                .Select(c => new Course
                 {
+                    CourseId = c.CourseId,
                     Title = c.Title,
                     Headline = c.Headline,
                     Image_200_H = c.Image_200_H,
                     EndTime = c.EndTime,
                     Discount_percent = c.Discount_percent
-                }).Skip(skipRow).Take(pageSize).ToList()
+                }).ToList()
             };
             return response;
         }
