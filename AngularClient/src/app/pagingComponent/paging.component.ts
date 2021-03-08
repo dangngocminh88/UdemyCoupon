@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
     selector: 'paging-app',
@@ -9,14 +10,16 @@ export class PagingComponent {
     pageIndex: number = 3;
     totalItem: number = 151;
 
-    constructor() { }
+    constructor(private activatedRoute: ActivatedRoute) { 
+        this.activatedRoute.queryParams.subscribe(params => {
+            if (params["page"] != undefined) {
+                this.pageIndex = params["page"]; 
+            }
+        });
+    }
 
     get totalPage(): number {
         return this.precisionRound((this.totalItem / this.pageSize), 0) + (this.totalItem % this.pageSize > 0 ? 1 : 0);
-    }
-
-    changePage(pageNumber: number) {
-        this.pageIndex = pageNumber;
     }
 
     precisionRound(number: number, precision: number) {

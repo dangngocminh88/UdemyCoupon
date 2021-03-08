@@ -1,13 +1,13 @@
 <nav aria-label="Page navigation example" class="mt-4">
     <ul class="pagination justify-content-center">
         <li class="page-item" [class.disabled]="pageIndex == 1">
-            <button class="page-link" tabindex="-1">Previous</button>
+            <a class="page-link" tabindex="-1" >Previous</a>
         </li>
         <li class="page-item" *ngIf="pageIndex > 3">
-            <button class="page-link">1</button>
+            <button class="page-link" >1</button>
         </li>
         <li class="page-item" *ngIf="pageIndex > 2">
-            <button class="page-link">{{pageIndex - 2}}</button>
+            <a class="page-link" [routerLink]="" [queryParams]="{page: pageIndex - 2}">{{pageIndex - 2}}</a>
         </li>
         <li class="page-item" *ngIf="pageIndex > 1">
             <button class="page-link" href="#">{{pageIndex - 1}}</button>
