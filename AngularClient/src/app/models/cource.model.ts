@@ -11,4 +11,6 @@ export class Course {
     discountedPrice: number = 0;
     amount: number = 0;
     createdDate: Date = new Date();
+    remainingTime: Date = new Date();
+    discount_percent: number = 0;
 }

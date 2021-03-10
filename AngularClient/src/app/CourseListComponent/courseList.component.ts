@@ -1,5 +1,5 @@
 import { Component } from "@angular/core";
-import { ActivatedRoute } from "@angular/router";
+import { ActivatedRoute, Router } from "@angular/router";
 import { Subject } from "rxjs";
 import { takeUntil } from "rxjs/operators";
 import { CourseList } from "../models/courseList.model";
@@ -11,23 +11,25 @@ import { DataService } from "../services/data.service";
 })
 export class CourseListComponent {
     courseList!: CourseList;
-    pageSize: number = 15;
+    pageSize: number = 10;
     pageIndex: number = 1;
-    totalItem: number = 151;
     destroy$: Subject<boolean> = new Subject<boolean>();
-    api: string = "api/courselist/"
+    api: string = "api/courselist"
 
-    constructor(private dataService: DataService, private activatedRoute: ActivatedRoute) { 
+    constructor(private dataService: DataService, private activatedRoute: ActivatedRoute, private router: Router) {
+    }
+
+    ngOnInit() {
         this.activatedRoute.queryParams.subscribe(params => {
             if (params["page"] != undefined && !isNaN(Number(params["page"]))) {
-                this.pageIndex = Number(params["page"]); 
+                this.pageIndex = Number(params["page"]);
             }
-            this.getData();
+            this.getData(this.router.url);
         });
     }
 
     get totalPage(): number {
-        return this.precisionRound((this.totalItem / this.pageSize), 0) + (this.totalItem % this.pageSize > 0 ? 1 : 0);
+        return this.precisionRound((this.courseList.totalCount / this.pageSize), 0) + (this.courseList.totalCount % this.pageSize > 0 ? 1 : 0);
     }
 
     ngOnDestroy() {
@@ -35,8 +37,9 @@ export class CourseListComponent {
         this.destroy$.unsubscribe();
     }
 
-    private getData() {
-        this.dataService.sendGetRequest(`${this.api}${this.pageIndex}`).pipe(takeUntil(this.destroy$)).subscribe((res: any) => {
+    private getData(type: string) {
+        console.log(type);
+        this.dataService.sendGetRequest(`${this.api}${type}/${this.pageIndex}`).pipe(takeUntil(this.destroy$)).subscribe((res: any) => {
             this.courseList = res;
         })
     }

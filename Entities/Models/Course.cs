@@ -24,5 +24,6 @@ namespace Entities.Models
         public decimal? Amount { get; set; }
         public decimal? Discount_percent { get; set; }
         public DateTime CreatedDate { get; set; }
+        public TimeSpan RemainingTime { get; set; }
     }
 }

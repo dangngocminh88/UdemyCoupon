@@ -1,6 +1,7 @@
 <div class="row mt-2 border-top">
     <div class="col-12 mt-2 text-right">
-        <label>Currently <b><span class="text-danger">{{courseList.totalCount || 0}}</span></b> active Udemy coupons</label>
+        <label>Currently <b><span class="text-danger">{{courseList.totalCount || 0}}</span></b> active Udemy
+            coupons</label>
     </div>
 </div>
 <div class="row mt-2 pt-2 pb-2 border shadow" *ngFor="let course of courseList.courses">
@@ -9,8 +10,19 @@
     </div>
     <div class="col-sm-8">
         <h5><a href="#" class="text-success">{{course.title}}</a></h5>
-        <p></p>
-        <label><b>About Course:</b>&nbsp;{{course.headline}}</label><span class="badge bg-danger">100% Off</span><br>
+        <p><b>About Course:</b>&nbsp;{{course.headline}}</p>
+        <p>
+            <b>Remaining time:</b>
+            &nbsp;{{course.remainingTime | date: 'd'}} Days {{course.remainingTime | date: 'H'}} Hours
+            <span class="badge badge-warning" [class.badge-danger]="course.discount_percent == 100"
+                style="font-size:1.2rem">{{course.discount_percent}}% Off</span>
+        </p>
+        <div class="row">
+            <div class="col-4 text-muted">Added on {{course.createdDate | date: 'yyyy, MMM d'}}</div>
+            <div class="col-8 text-right">
+                <button type="button" class="btn btn-success">Go To Course Detail&nbsp;&nbsp;<i class="fa fa-arrow-right"></i></button>
+            </div>
+        </div>
     </div>
 </div>
 <nav aria-label="Page navigation example" class="mt-4">
@@ -20,6 +32,9 @@
         </li>
         <li class="page-item" *ngIf="pageIndex > 3">
             <a class="page-link" [routerLink]="" [queryParams]="{page: 1}">1</a>
+        </li>
+        <li class="page-item" *ngIf="pageIndex > 3">
+            <a class="page-link">...</a>
         </li>
         <li class="page-item" *ngIf="pageIndex > 2">
             <a class="page-link" [routerLink]="" [queryParams]="{page: pageIndex - 2}">{{pageIndex - 2}}</a>
@@ -35,6 +50,9 @@
         </li>
         <li class="page-item" *ngIf="totalPage - pageIndex >= 2">
             <a class="page-link" [routerLink]="" [queryParams]="{page: pageIndex + 2}">{{pageIndex + 2}}</a>
+        </li>
+        <li class="page-item" *ngIf="totalPage - pageIndex >= 3">
+            <a class="page-link">...</a>
         </li>
         <li class="page-item" *ngIf="totalPage - pageIndex >= 3">
             <a class="page-link" [routerLink]="" [queryParams]="{page: totalPage}">{{totalPage}}</a>

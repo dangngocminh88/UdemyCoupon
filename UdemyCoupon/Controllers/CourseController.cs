@@ -8,32 +8,34 @@ namespace UdemyCoupon.Controllers
     [Route("api")]
     public class CourseController : ControllerBase
     {
-        private readonly int pageSize = 15;
+        private readonly int pageSize = 10;
         private readonly ICourseRepository courseRepository;
         public CourseController(ICourseRepository courseRepository)
         {
             this.courseRepository = courseRepository;
         }
+
         [HttpGet]
-        [Route("{page}")]
-        public IActionResult GetCourse(int page)
+        [Route("courselist/{type}/{page}")]
+        public IActionResult CourseList(string type, int page)
         {
             try
             {
-                return Ok(courseRepository.GetCourse(page, pageSize));
+                return Ok(courseRepository.CourseList(type, page, pageSize));
             }
             catch (Exception ex)
             {
                 return BadRequest(ex.Message);
             }
         }
+
         [HttpGet]
-        [Route("courseList/{page}")]
-        public IActionResult CourseList(int page)
+        [Route("coursedetail/{courseId}")]
+        public IActionResult CourseDetail(long courseId)
         {
             try
             {
-                return Ok(courseRepository.CourseList(page, pageSize));
+                return Ok(courseRepository.CourseDetail(courseId));
             }
             catch (Exception ex)
             {
