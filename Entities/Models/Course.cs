@@ -12,7 +12,7 @@ namespace Entities.Models
         public string Title { get; set; }
         public string Headline { get; set; }
         public string Description { get; set; }
-        public decimal Avg_rating_recent { get; set; }
+        public decimal? Avg_rating_recent { get; set; }
         //public List<string> Objectives_summary { get; set; }
         //public List<string> Target_audiences { get; set; }
         public string Image_200_H { get; set; }
@@ -23,7 +23,7 @@ namespace Entities.Models
         public string DiscountedPrice { get; set; }
         public decimal? Amount { get; set; }
         public decimal? Discount_percent { get; set; }
-        public DateTime CreatedDate { get; set; }
-        public TimeSpan RemainingTime { get; set; }
+        public DateTime? CreatedDate { get; set; }
+        public TimeSpan? RemainingTime { get; set; }
     }
 }

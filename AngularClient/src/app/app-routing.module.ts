@@ -7,7 +7,7 @@ const routes: Routes = [
   { path: "all", component: CourseListComponent },
   { path: "100off", component: CourseListComponent },
   { path: "discount", component: CourseListComponent },
-  { path: "coursedetail", component: CourseDetailComponent },
+  { path: "coursedetail/:courseId", component: CourseDetailComponent },
   { path: "", redirectTo: "/all", pathMatch: "full" },
   { path: '**', redirectTo: "/all", pathMatch: "full" }
 ];

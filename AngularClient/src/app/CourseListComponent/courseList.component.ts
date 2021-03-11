@@ -38,7 +38,6 @@ export class CourseListComponent {
     }
 
     private getData(type: string) {
-        console.log(type);
         this.dataService.sendGetRequest(`${this.api}${type}/${this.pageIndex}`).pipe(takeUntil(this.destroy$)).subscribe((res: any) => {
             this.courseList = res;
         })

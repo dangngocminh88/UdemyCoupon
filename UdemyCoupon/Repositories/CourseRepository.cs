@@ -49,7 +49,19 @@ namespace UdemyCoupon.Repositories
 
         public Course CourseDetail(long courseId)
         {
-            return this.RepositoryContext.Courses.Find(courseId);
+            IQueryable<Course> query = this.RepositoryContext.Courses.AsNoTracking().Where(c => c.CourseId == courseId);
+            return query.Select(c => new Course
+            {
+                UdemyLink = c.UdemyLink,
+                Title = c.Title,
+                Headline = c.Headline,
+                Description = c.Description,
+                Avg_rating_recent = c.Avg_rating_recent,
+                Image_200_H = c.Image_200_H,
+                Category = c.Category,
+                OriginalPrice = c.OriginalPrice,
+                DiscountedPrice = c.DiscountedPrice,
+            }).FirstOrDefault();
         }
     }
 }

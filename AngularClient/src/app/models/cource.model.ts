@@ -1,5 +1,6 @@
 export class Course {
     courseId: number = 0;
+    udemyLink: string = "";
     title: string = "";
     headline: string = "";
     description: string = "";
