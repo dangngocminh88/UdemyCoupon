@@ -4,20 +4,22 @@ using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using UdemyCoupon.Models;
 
 namespace UdemyCoupon.Repositories
 {
     public interface ICourseRepository
     {
-        CourseList CourseList(string type, int page, int pageSize);
-        Course CourseDetail(long courseId);
+        Task<CourseList> CourseList(string type, int page, int pageSize);
+        Task<Course> CourseDetail(long courseId);
+        Task<List<string>> CourseCategory();
     }
     public class CourseRepository : RepositoryBase, ICourseRepository
     {
         public CourseRepository(RepositoryContext repositoryContext) : base(repositoryContext) { }
 
-        public CourseList CourseList(string type, int page, int pageSize)
+        public async Task<CourseList> CourseList(string type, int page, int pageSize)
         {
             int skipRow = (page - 1) * pageSize;
             IQueryable<Course> query = this.RepositoryContext.Courses.AsNoTracking();
@@ -29,10 +31,9 @@ namespace UdemyCoupon.Repositories
             {
                 query = query.Where(c => c.Discount_percent < 100);
             }
-            CourseList response = new CourseList
-            {
-                TotalCount = query.Count(),
-                Courses = query.OrderByDescending(c => c.CreatedDate).Skip(skipRow).Take(pageSize)
+
+            Task<int> totalCount = query.CountAsync();
+            Task<List<Course>> courses = query.OrderByDescending(c => c.CreatedDate).Skip(skipRow).Take(pageSize)
                     .Select(c => new Course
                     {
                         CourseId = c.CourseId,
@@ -42,15 +43,20 @@ namespace UdemyCoupon.Repositories
                         RemainingTime = DateTime.Now.Subtract(c.EndTime ?? DateTime.Now),
                         Discount_percent = c.Discount_percent,
                         CreatedDate = c.CreatedDate
-                    }).ToList()
+                    }).ToListAsync();
+
+            CourseList response = new CourseList
+            {
+                TotalCount = await totalCount,
+                Courses = await courses
             };
             return response;
         }
 
-        public Course CourseDetail(long courseId)
+        public async Task<Course> CourseDetail(long courseId)
         {
             IQueryable<Course> query = this.RepositoryContext.Courses.AsNoTracking().Where(c => c.CourseId == courseId);
-            return query.Select(c => new Course
+            return await query.Select(c => new Course
             {
                 UdemyLink = c.UdemyLink,
                 Title = c.Title,
@@ -61,7 +67,12 @@ namespace UdemyCoupon.Repositories
                 Category = c.Category,
                 OriginalPrice = c.OriginalPrice,
                 DiscountedPrice = c.DiscountedPrice,
-            }).FirstOrDefault();
+            }).FirstOrDefaultAsync();
+        }
+
+        public async Task<List<string>> CourseCategory()
+        {
+            return await this.RepositoryContext.Courses.AsNoTracking().GroupBy(c => c.Category).Select(g => g.Key).ToListAsync();
         }
     }
 }

@@ -1,28 +1,37 @@
-<div class="row mt-4">
-    <div class="col-sm-4"><img src="{{course.image_200_H}}" alt="{{course.title}}" width="100%"></div>
-    <div class="col-sm-8">
-        <p class="text-primary">{{course.category}}</p>
-        <h3>{{course.title}}</h3>
-        <p class="pt-2">{{course.headline}}</p>
-        <p>
-            <b>{{course.avg_rating_recent | number: '1.1-1'}}</b>&nbsp;
-            <fa-icon class="text-warning" [icon]="displayStarRate(1, course.avg_rating_recent)"></fa-icon>
-            <fa-icon class="text-warning" [icon]="displayStarRate(2, course.avg_rating_recent)"></fa-icon>
-            <fa-icon class="text-warning" [icon]="displayStarRate(3, course.avg_rating_recent)"></fa-icon>
-            <fa-icon class="text-warning" [icon]="displayStarRate(4, course.avg_rating_recent)"></fa-icon>
-            <fa-icon class="text-warning" [icon]="displayStarRate(5, course.avg_rating_recent)"></fa-icon>
-        </p>
-        <h4>{{course.discountedPrice}}&nbsp;&nbsp;<del class="text-muted">{{course.originalPrice}}</del></h4>
+<div class="d-flex justify-content-center" *ngIf="course.udemyLink == ''">
+    <div class="spinner-border" role="status">
+        <span class="sr-only">Loading...</span>
     </div>
 </div>
-<div class="row mt-2">
-    <div class="col-sm-12 border-bottom">
-        <h4>Description</h4>
-        <div [innerHTML]="course.description"></div>
-    </div>
-</div>
-<div class="row mt-2">
-    <div class="col-12 text-right p-0">
-        <a href="{{course.udemyLink}}" target="_blank" class="btn btn-success">Get Course</a>
+<div class="row bg-white border" *ngIf="course.udemyLink != ''">
+    <div class="col-sm-12">
+        <div class="row mt-2">
+            <div class="col-sm-4"><img src="{{course.image_200_H}}" alt="{{course.title}}" width="100%"></div>
+            <div class="col-sm-8">
+                <p class="text-primary">{{course.category}}</p>
+                <h3>{{course.title}}</h3>
+                <p class="pt-2">{{course.headline}}</p>
+                <p>
+                    <b>{{course.avg_rating_recent | number: '1.1-1'}}</b>&nbsp;
+                    <fa-icon class="text-warning" [icon]="displayStarRate(1, course.avg_rating_recent)"></fa-icon>
+                    <fa-icon class="text-warning" [icon]="displayStarRate(2, course.avg_rating_recent)"></fa-icon>
+                    <fa-icon class="text-warning" [icon]="displayStarRate(3, course.avg_rating_recent)"></fa-icon>
+                    <fa-icon class="text-warning" [icon]="displayStarRate(4, course.avg_rating_recent)"></fa-icon>
+                    <fa-icon class="text-warning" [icon]="displayStarRate(5, course.avg_rating_recent)"></fa-icon>
+                </p>
+                <h4>{{course.discountedPrice}}&nbsp;&nbsp;<del class="text-muted">{{course.originalPrice}}</del></h4>
+            </div>
+        </div>
+        <div class="row mt-2">
+            <div class="col-sm-12 border-bottom">
+                <h4>Description</h4>
+                <div [innerHTML]="course.description"></div>
+            </div>
+        </div>
+        <div class="row mt-2 mb-2">
+            <div class="col-12 text-right">
+                <a href="{{course.udemyLink}}" target="_blank" class="btn btn-success">Get Course</a>
+            </div>
+        </div>
     </div>
 </div>

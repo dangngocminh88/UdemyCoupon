@@ -10,7 +10,7 @@ import { DataService } from "../services/data.service";
     templateUrl: './courseList.component.html'
 })
 export class CourseListComponent {
-    courseList!: CourseList;
+    courseList: CourseList = new CourseList();
     pageSize: number = 10;
     pageIndex: number = 1;
     destroy$: Subject<boolean> = new Subject<boolean>();
@@ -24,7 +24,7 @@ export class CourseListComponent {
             if (params["page"] != undefined && !isNaN(Number(params["page"]))) {
                 this.pageIndex = Number(params["page"]);
             }
-            this.getData(this.router.url);
+            this.getData(this.router.url.split('?')[0]);
         });
     }
 

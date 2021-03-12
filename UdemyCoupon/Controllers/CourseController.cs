@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using System;
+using System.Threading.Tasks;
 using UdemyCoupon.Repositories;
 
 namespace UdemyCoupon.Controllers
@@ -17,11 +18,11 @@ namespace UdemyCoupon.Controllers
 
         [HttpGet]
         [Route("courselist/{type}/{page}")]
-        public IActionResult CourseList(string type, int page)
+        public async Task<IActionResult> CourseList(string type, int page)
         {
             try
             {
-                return Ok(courseRepository.CourseList(type, page, pageSize));
+                return Ok(await courseRepository.CourseListAsync(type, page, pageSize));
             }
             catch (Exception ex)
             {
@@ -35,7 +36,21 @@ namespace UdemyCoupon.Controllers
         {
             try
             {
-                return Ok(courseRepository.CourseDetail(courseId));
+                return Ok(courseRepository.CourseDetailAsync(courseId));
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+        [HttpGet]
+        [Route("coursecategory")]
+        public IActionResult CourseCategory()
+        {
+            try
+            {
+                return Ok(courseRepository.CourseCategory());
             }
             catch (Exception ex)
             {
