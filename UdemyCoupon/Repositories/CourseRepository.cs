@@ -32,8 +32,8 @@ namespace UdemyCoupon.Repositories
                 query = query.Where(c => c.Discount_percent < 100);
             }
 
-            Task<int> totalCount = query.CountAsync();
-            Task<List<Course>> courses = query.OrderByDescending(c => c.CreatedDate).Skip(skipRow).Take(pageSize)
+            int totalCount = await query.CountAsync();
+            List<Course> courses = await query.OrderByDescending(c => c.CreatedDate).Skip(skipRow).Take(pageSize)
                     .Select(c => new Course
                     {
                         CourseId = c.CourseId,
@@ -47,8 +47,8 @@ namespace UdemyCoupon.Repositories
 
             CourseList response = new CourseList
             {
-                TotalCount = await totalCount,
-                Courses = await courses
+                TotalCount = totalCount,
+                Courses = courses
             };
             return response;
         }

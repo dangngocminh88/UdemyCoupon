@@ -1,4 +1,4 @@
-import { HttpClient, HttpErrorResponse } from "@angular/common/http";
+import { HttpClient, HttpErrorResponse, HttpHeaders } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { throwError } from "rxjs";
 import { catchError } from 'rxjs/operators';
@@ -27,5 +27,15 @@ export class DataService {
 
     public sendGetRequest(api: string) {
       return this.httpClient.get(`${this.REST_API_SERVER}${api}`).pipe(catchError(this.handleError));
+    }
+
+    public sendPostRequest(api: string, body: any) {
+      return this.httpClient.post(`${this.REST_API_SERVER}${api}`, body, this.generateHeaders()).pipe(catchError(this.handleError));
+    }
+
+    private generateHeaders() {
+      return {
+        headers: new HttpHeaders({'Content-Type': 'application/json'})
+      }
     }
 }

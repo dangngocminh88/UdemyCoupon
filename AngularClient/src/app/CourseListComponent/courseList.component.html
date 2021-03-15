@@ -36,37 +36,37 @@
 <nav aria-label="Page navigation example" class="mt-4">
     <ul class="pagination justify-content-center">
         <li class="page-item" [class.disabled]="pageIndex == 1">
-            <a class="page-link" [routerLink]="" [queryParams]="{page: pageIndex - 1}">Previous</a>
+            <a class="page-link" [routerLink]="" [queryParams]="{page: pageIndex - 1, category: courseCategory}">Previous</a>
         </li>
         <li class="page-item" *ngIf="pageIndex > 3">
-            <a class="page-link" [routerLink]="" [queryParams]="{page: 1}">1</a>
+            <a class="page-link" [routerLink]="" [queryParams]="{page: 1, category: courseCategory}">1</a>
         </li>
         <li class="page-item" *ngIf="pageIndex > 3">
             <a class="page-link">...</a>
         </li>
         <li class="page-item" *ngIf="pageIndex > 2">
-            <a class="page-link" [routerLink]="" [queryParams]="{page: pageIndex - 2}">{{pageIndex - 2}}</a>
+            <a class="page-link" [routerLink]="" [queryParams]="{page: pageIndex - 2, category: courseCategory}">{{pageIndex - 2}}</a>
         </li>
         <li class="page-item" *ngIf="pageIndex > 1">
-            <a class="page-link" [routerLink]="" [queryParams]="{page: pageIndex - 1}">{{pageIndex - 1}}</a>
+            <a class="page-link" [routerLink]="" [queryParams]="{page: pageIndex - 1, category: courseCategory}">{{pageIndex - 1}}</a>
         </li>
         <li class="page-item active">
             <a class="page-link">{{pageIndex}}</a>
         </li>
         <li class="page-item" *ngIf="totalPage - pageIndex >= 1">
-            <a class="page-link" [routerLink]="" [queryParams]="{page: pageIndex + 1}">{{pageIndex + 1}}</a>
+            <a class="page-link" [routerLink]="" [queryParams]="{page: pageIndex + 1, category: courseCategory}">{{pageIndex + 1}}</a>
         </li>
         <li class="page-item" *ngIf="totalPage - pageIndex >= 2">
-            <a class="page-link" [routerLink]="" [queryParams]="{page: pageIndex + 2}">{{pageIndex + 2}}</a>
+            <a class="page-link" [routerLink]="" [queryParams]="{page: pageIndex + 2, category: courseCategory}">{{pageIndex + 2}}</a>
         </li>
         <li class="page-item" *ngIf="totalPage - pageIndex >= 3">
             <a class="page-link">...</a>
         </li>
         <li class="page-item" *ngIf="totalPage - pageIndex >= 3">
-            <a class="page-link" [routerLink]="" [queryParams]="{page: totalPage}">{{totalPage}}</a>
+            <a class="page-link" [routerLink]="" [queryParams]="{page: totalPage, category: courseCategory}">{{totalPage}}</a>
         </li>
         <li class="page-item" [class.disabled]="pageIndex == totalPage">
-            <a class="page-link" [routerLink]="" [queryParams]="{page: pageIndex + 1}">Next</a>
+            <a class="page-link" [routerLink]="" [queryParams]="{page: pageIndex + 1, category: courseCategory}">Next</a>
         </li>
     </ul>
 </nav>

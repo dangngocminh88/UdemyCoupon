@@ -32,8 +32,9 @@
     </div>
     <div class="col-sm-2 pt-2">
       <h5 class="bg-danger text-white text-center p-2 m-0">CATEGORY</h5>
-      <div class="bg-white">1</div>
-      <div class="bg-white">2</div>
+      <div class="bg-white border p-2" *ngFor="let courseCategory of courseCatagories">
+        <a [routerLink]="" [queryParams]="{page: 1, category: courseCategory}" [queryParamsHandling]="">{{courseCategory}}</a>        
+      </div>
     </div>
     <div class="col-sm-2"></div>
   </div>

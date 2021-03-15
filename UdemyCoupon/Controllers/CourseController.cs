@@ -1,6 +1,9 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Entities.Models;
+using Microsoft.AspNetCore.Mvc;
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
+using UdemyCoupon.Models;
 using UdemyCoupon.Repositories;
 
 namespace UdemyCoupon.Controllers
@@ -22,7 +25,8 @@ namespace UdemyCoupon.Controllers
         {
             try
             {
-                return Ok(await courseRepository.CourseListAsync(type, page, pageSize));
+                CourseList courseList = await courseRepository.CourseList(type, page, pageSize);
+                return Ok(courseList);
             }
             catch (Exception ex)
             {
@@ -32,11 +36,12 @@ namespace UdemyCoupon.Controllers
 
         [HttpGet]
         [Route("coursedetail/{courseId}")]
-        public IActionResult CourseDetail(long courseId)
+        public async Task<IActionResult> CourseDetail(long courseId)
         {
             try
             {
-                return Ok(courseRepository.CourseDetailAsync(courseId));
+                Course course = await courseRepository.CourseDetail(courseId);
+                return Ok(course);
             }
             catch (Exception ex)
             {
@@ -46,11 +51,12 @@ namespace UdemyCoupon.Controllers
 
         [HttpGet]
         [Route("coursecategory")]
-        public IActionResult CourseCategory()
+        public async Task<IActionResult> CourseCategory()
         {
             try
             {
-                return Ok(courseRepository.CourseCategory());
+                List<string> courseCategories = await courseRepository.CourseCategory();
+                return Ok(courseCategories);
             }
             catch (Exception ex)
             {

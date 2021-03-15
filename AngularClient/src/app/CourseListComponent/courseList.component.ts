@@ -13,6 +13,7 @@ export class CourseListComponent {
     courseList: CourseList = new CourseList();
     pageSize: number = 10;
     pageIndex: number = 1;
+    courseCategory: string | undefined;
     destroy$: Subject<boolean> = new Subject<boolean>();
     api: string = "api/courselist"
 
@@ -23,6 +24,11 @@ export class CourseListComponent {
         this.activatedRoute.queryParams.subscribe(params => {
             if (params["page"] != undefined && !isNaN(Number(params["page"]))) {
                 this.pageIndex = Number(params["page"]);
+            } else {
+                this.pageIndex = 1;
+            }
+            if (params["category"] != undefined) {
+                this.courseCategory = params["category"];
             }
             this.getData(this.router.url.split('?')[0]);
         });
