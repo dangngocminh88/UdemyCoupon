@@ -12,20 +12,19 @@ namespace UdemyCoupon.Controllers
     [Route("api")]
     public class CourseController : ControllerBase
     {
-        private readonly int pageSize = 10;
         private readonly ICourseRepository courseRepository;
         public CourseController(ICourseRepository courseRepository)
         {
             this.courseRepository = courseRepository;
         }
 
-        [HttpGet]
-        [Route("courselist/{type}/{page}")]
-        public async Task<IActionResult> CourseList(string type, int page)
+        [HttpPost]
+        [Route("courselist")]
+        public async Task<IActionResult> CourseList([FromBody] CourseListRequest request)
         {
             try
             {
-                CourseList courseList = await courseRepository.CourseList(type, page, pageSize);
+                CourseList courseList = await courseRepository.CourseList(request);
                 return Ok(courseList);
             }
             catch (Exception ex)

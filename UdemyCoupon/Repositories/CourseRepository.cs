@@ -11,7 +11,7 @@ namespace UdemyCoupon.Repositories
 {
     public interface ICourseRepository
     {
-        Task<CourseList> CourseList(string type, int page, int pageSize);
+        Task<CourseList> CourseList(CourseListRequest request);
         Task<Course> CourseDetail(long courseId);
         Task<List<string>> CourseCategory();
     }
@@ -19,21 +19,29 @@ namespace UdemyCoupon.Repositories
     {
         public CourseRepository(RepositoryContext repositoryContext) : base(repositoryContext) { }
 
-        public async Task<CourseList> CourseList(string type, int page, int pageSize)
+        public async Task<CourseList> CourseList(CourseListRequest request)
         {
-            int skipRow = (page - 1) * pageSize;
+            int skipRow = (request.Page - 1) * request.PageSize;
+
             IQueryable<Course> query = this.RepositoryContext.Courses.AsNoTracking();
-            if (type.ToLower().Equals("100off"))
+
+            if (request.Type.ToLower().Equals("/100off"))
             {
                 query = query.Where(c => c.Discount_percent == 100);
             }
-            if (type.ToLower().Equals("discount"))
+
+            if (request.Type.ToLower().Equals("/discount"))
             {
                 query = query.Where(c => c.Discount_percent < 100);
             }
 
+            if (!string.IsNullOrEmpty(request.Category))
+            {
+                query = query.Where(c => c.Category == request.Category);
+            }
+
             int totalCount = await query.CountAsync();
-            List<Course> courses = await query.OrderByDescending(c => c.CreatedDate).Skip(skipRow).Take(pageSize)
+            List<Course> courses = await query.OrderByDescending(c => c.CreatedDate).Skip(skipRow).Take(request.PageSize)
                     .Select(c => new Course
                     {
                         CourseId = c.CourseId,
@@ -50,6 +58,7 @@ namespace UdemyCoupon.Repositories
                 TotalCount = totalCount,
                 Courses = courses
             };
+
             return response;
         }
 

@@ -15,7 +15,8 @@ export class CourseListComponent {
     pageIndex: number = 1;
     courseCategory: string | undefined;
     destroy$: Subject<boolean> = new Subject<boolean>();
-    api: string = "api/courselist"
+    loading: boolean = true;
+    api: string = "api/courselist/"
 
     constructor(private dataService: DataService, private activatedRoute: ActivatedRoute, private router: Router) {
     }
@@ -44,7 +45,17 @@ export class CourseListComponent {
     }
 
     private getData(type: string) {
-        this.dataService.sendGetRequest(`${this.api}${type}/${this.pageIndex}`).pipe(takeUntil(this.destroy$)).subscribe((res: any) => {
+        this.loading = true;
+
+        let body = {
+            Page : this.pageIndex,
+            PageSize : this.pageSize,
+            Category : this.courseCategory,
+            Type: type
+        };
+
+        this.dataService.sendPostRequest(this.api, body).pipe(takeUntil(this.destroy$)).subscribe((res: any) => {
+            this.loading = false;
             this.courseList = res;
         })
     }

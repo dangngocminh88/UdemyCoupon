@@ -11,13 +11,13 @@ import { DataService } from './services/data.service';
 export class AppComponent {
   api: string = "api/coursecategory";
   destroy$: Subject<boolean> = new Subject<boolean>();
-  courseCatagories: string[] = [];
+  courseCategories: string[] = [];
 
   constructor(private dataService: DataService) { }
 
   ngOnInit() {
     this.dataService.sendGetRequest(`${this.api}`).pipe(takeUntil(this.destroy$)).subscribe((res: any) => {
-      this.courseCatagories = res;
+      this.courseCategories = res;
     });
   }
 
