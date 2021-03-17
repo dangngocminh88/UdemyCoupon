@@ -1,10 +1,10 @@
-﻿using GetUdemyCourse.Models;
+﻿using Jobs.Models;
 using System.Collections.Generic;
 using System.Net.Http;
 using System.Text.Json;
 using System.Threading.Tasks;
 
-namespace GetUdemyCourse.Website
+namespace Jobs.Website
 {
     public class CourseMania
     {

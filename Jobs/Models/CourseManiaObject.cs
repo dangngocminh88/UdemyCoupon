@@ -1,4 +1,4 @@
-﻿namespace GetUdemyCourse.Models
+﻿namespace Jobs.Models
 {
     public class CourseManiaObject
     {

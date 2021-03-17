@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace GetUdemyCourse.Models
+namespace Jobs.Models
 {
     public class Course
     {

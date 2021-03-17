@@ -1,10 +1,7 @@
 ﻿using HtmlAgilityPack;
-using System;
 using System.Collections.Generic;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace GetUdemyCourse.Website
+namespace Jobs.Website
 {
     public class YoFreeSample
     {

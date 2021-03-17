@@ -4,7 +4,7 @@ using System.Data;
 using System.Data.Common;
 using System.Data.SqlClient;
 
-namespace GetUdemyCourse.Configs
+namespace Jobs.Configs
 {
     public class BaseDataAccess
     {

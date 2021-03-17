@@ -1,10 +1,10 @@
-﻿using GetUdemyCourse.Configs;
-using GetUdemyCourse.Models;
+﻿using Jobs.Configs;
+using Jobs.Models;
 using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Text.Json;
 
-namespace GetUdemyCourse
+namespace Jobs
 {
     public class Data : BaseDataAccess
     {
@@ -13,12 +13,18 @@ namespace GetUdemyCourse
 
         }
 
-        public void Execute(List<Course> udemyLinkList)
+        public void InsertCourse(List<Course> udemyLinkList)
         {
             List<SqlParameter> parameters = new List<SqlParameter>();
             string json = JsonSerializer.Serialize(udemyLinkList);
             parameters.Add(base.GetParameter("@json", json));
             base.ExecuteScalar("job_InsertCourse", parameters);
+        }
+
+        public void DeleteOutdatedCourse()
+        {
+            List<SqlParameter> parameters = new List<SqlParameter>();
+            base.ExecuteScalar("job_DeleteOutdatedCourse", parameters);
         }
     }
 }

@@ -1,10 +1,13 @@
 using Entities;
+using Jobs;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Quartz;
+using UdemyCoupon.Extensions;
 using UdemyCoupon.Repositories;
 
 namespace UdemyCoupon
@@ -37,6 +40,16 @@ namespace UdemyCoupon
                 });
 
             services.AddScoped<ICourseRepository, CourseRepository>();
+
+            services.AddQuartz(q =>
+            {
+                q.UseMicrosoftDependencyInjectionScopedJobFactory();
+
+                // Register the job, loading the schedule from configuration
+                q.AddJobAndTrigger<CrawlUdemyCouponJob>(Configuration);
+            });
+
+            services.AddQuartzHostedService(q => q.WaitForJobsToComplete = true);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
